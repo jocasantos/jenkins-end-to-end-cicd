@@ -87,7 +87,7 @@ Steps:
    6. Start your Kubernetes cluster (I'll use minikube, but can use EKS or other)
 
    7. Install Argo CD on your Kubernetes cluster
-      - Go https://operatorhub.io/operator/argocd-operator and follow the instructions
+      - Go https://operatorhub.io/operator/argocd-operator, press `Install` and follow the instructions
    
    8. Add your docker and github credentials to Jenkins
       - For GitHub -> Go to Jenkins -> `Manage Jenkins` -> `Credentials` -> `System` -> `Global Credentials` -> `Add Credentials` -> `Secret Text` -> `Add the token` (id: github)
@@ -96,7 +96,41 @@ Steps:
    9. Dont forget to change the `jenkinsfile` with your own configurations
       - Change the path for your docker image in spring-boot-app-manifests > deployment.yml 
 
-   10. Run the Jenkins pipeline and verify that the Java application is built, tested, and deployed to Kubernetes using Argo CD.
+   10. Run the Jenkins pipeline
+      - Go to Jenkins -> `Your pipeline` -> `Build Now`
+      - Dont worry if your pipeline fails, you can check the logs and fix the issues
+      - If success, you can access see your sonar report on `http://<ip-address>:9000`
+
+   11. Check the Argo CD
+      - apply Argo CD manifest
+      ```bash
+      kubectl apply -f argocd-basic.yml
+      ```
+      - Check the NodePort for `argocd-server` 
+      ```bash
+      kubectl get svc
+      ```
+      - Access the Argo CD on `http://<ip-address>:<node-port>`
+      - Get the password
+      ```bash
+      kubectl get secret
+      kubectl edit secret example-argocd-cluster
+      ```
+      - Decode the password
+      ```bash
+      echo 'your-password' | base64 -d
+      ```
+      - Go to Argo CD UI and create a NEW APP
+      - Application Name: example
+      - Project Name: default
+      - Sync Policy: Automatic
+      - Repository URL: <your-repo-url>
+      - Path: spring-boot-app-manifests
+      - Cluster URL: https://kubernetes.default.svc
+      - Namespace: default
+
+
+
 
 
 
