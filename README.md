@@ -18,7 +18,7 @@ Steps:
        1.1 See > README.md of spring-boot-app
        1.1 `cd java-maven-sonar-argocd-helm-k8s/spring-boot-app`
        1.3 `mvn clean package` for artifact generation
-       1.2 Test it using Docker way (adviced)
+       1.2 Test it using Docker way (adviced), tag the image with your dockerhub username <dockerhub-username>/ultimate-cicd-pipeline:v1> and push it to your dockerhub repository
 
    2. Create a EC2 instance and install Jenkins on it.
       - Free tier isn't enough, so you need to upgrade the instance type for "large" (8Gb) memory
@@ -94,7 +94,6 @@ Steps:
       - For Docker -> Go to Jenkins -> `Manage Jenkins` -> `Credentials` -> `System` -> `Global Credentials` -> `Add Credentials` -> `Username with password` -> `Add the credentials` (id: docker-cred)
 
    9. Dont forget to change the `jenkinsfile` with your own configurations
-      - Change the `dockerhub` repository if you tried run the app locally and push it to your own repository, or leave it as it is.
 
    10. Run the Jenkins pipeline and verify that the Java application is built, tested, and deployed to Kubernetes using Argo CD.
 
