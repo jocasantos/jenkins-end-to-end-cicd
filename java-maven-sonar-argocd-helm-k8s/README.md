@@ -14,38 +14,38 @@ Prerequisites:
 
 Steps:
 
-    1. Test the Java application locally:
+   1. Test the Java application locally:
        1.1 See > README.md of spring-boot-app
        1.1 `cd java-maven-sonar-argocd-helm-k8s/spring-boot-app`
        1.3 `mvn clean package` for artifact generation
        1.2 Test it using Docker way (adviced)
 
-    2. Create a EC2 instance and install Jenkins on it.
-       2.1 Free tier isn't enough, so you need to upgrade the instance type for "large" (8Gb) memory
-       2.2 Configure the security group to allow all trafic (dont do it in production, is just for a demo purpose)
-       2.2 Connect by SSH to the instance and install Jenkins
-       2.3 Install Java
-            ```bash
-            sudo apt update
-            sudo apt install openjdk-17-jdk
-            ```
-       2.4 Install Jenkins
-            ```bash
-            curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
-            /usr/share/keyrings/jenkins-keyring.asc > /dev/null
-            echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-            https://pkg.jenkins.io/debian binary/ | sudo tee \
-            /etc/apt/sources.list.d/jenkins.list > /dev/null
-            sudo apt-get update
-            sudo apt-get install jenkins
-            ```
-       2.5 Start Jenkins
-               `sudo systemctl start jenkins`
-       2.6 Open Jenkins in your browser
-               `<your-ec2-public-ip>:8080`
-       2.7 Get the initial password  
-               `sudo cat /var/lib/jenkins/secrets/initialAdminPassword`
-       2.8 Install default and most used plugins    
+   2. Create a EC2 instance and install Jenkins on it.
+      2.1 Free tier isn't enough, so you need to upgrade the instance type for "large" (8Gb) memory
+      2.2 Configure the security group to allow all trafic (dont do it in production, is just for a demo purpose)
+      2.2 Connect by SSH to the instance and install Jenkins
+      2.3 Install Java
+         ```bash
+         sudo apt update
+         sudo apt install openjdk-17-jdk
+         ```
+      2.4 Install Jenkins
+         ```bash
+         curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
+         /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+         echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+         https://pkg.jenkins.io/debian binary/ | sudo tee \
+         /etc/apt/sources.list.d/jenkins.list > /dev/null
+         sudo apt-get update
+         sudo apt-get install jenkins
+         ```
+      2.5 Start Jenkins
+            `sudo systemctl start jenkins`
+      2.6 Open Jenkins in your browser
+            `<your-ec2-public-ip>:8080`
+      2.7 Get the initial password  
+            `sudo cat /var/lib/jenkins/secrets/initialAdminPassword`
+      2.8 Install default and most used plugins    
 
 
 
