@@ -94,6 +94,7 @@ Steps:
       - For Docker -> Go to Jenkins -> `Manage Jenkins` -> `Credentials` -> `System` -> `Global Credentials` -> `Add Credentials` -> `Username with password` -> `Add the credentials` (id: docker-cred)
 
    9. Dont forget to change the `jenkinsfile` with your own configurations
+      - Change the path for your docker image in spring-boot-app-manifests > deployment.yml 
 
    10. Run the Jenkins pipeline and verify that the Java application is built, tested, and deployed to Kubernetes using Argo CD.
 
