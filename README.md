@@ -15,10 +15,10 @@ Prerequisites:
 Steps:
 
    1. Test the Java application locally:
-       1.1 See > README.md of spring-boot-app
-       1.1 `cd java-maven-sonar-argocd-helm-k8s/spring-boot-app`
-       1.3 `mvn clean package` for artifact generation
-       1.2 Test it using Docker way (adviced), tag the image with your dockerhub username <dockerhub-username>/ultimate-cicd-pipeline:v1> and push it to your dockerhub repository
+      - See > README.md of spring-boot-app
+      - `cd java-maven-sonar-argocd-helm-k8s/spring-boot-app`
+      - `mvn clean package` for artifact generation
+      - Test it using Docker way (adviced), tag the image with your dockerhub username <dockerhub-username>/ultimate-cicd-pipeline:v1> and push it to your dockerhub repository
 
    2. Create a EC2 instance and install Jenkins on it.
       - Free tier isn't enough, so you need to upgrade the instance type for "large" (8Gb) memory
@@ -51,8 +51,13 @@ Steps:
       - Restart Jenkins (best practices when install new plugins).
 
    3. Create a new Jenkins pipeline:
-      - In Jenkins, create a new pipeline job and configure it with the Git repository URL for the Java application.
-      - Add a Jenkinsfile to the Git repository to define the pipeline stages (already done).
+      - In Jenkins, create a new pipeline job
+      - Pipeline: `Pipeline script from SCM`
+      - SCM: `Git`
+      - Repository URL: `your-repo-url`
+      - Branches to build: `*/main`
+      - Script Path: `spring-boot-app/Jenkinsfile`
+      - Save
    
    4. Install SonarQube locally and configure it:
          ```bash
@@ -129,13 +134,22 @@ Steps:
       - Cluster URL: https://kubernetes.default.svc
       - Namespace: default
 
-
-
-
-
-
-
-
+   12. Check if the pods are runing on Kubernetes
+      ```bash
+      kubectl get pods
+      ```
+      - Expose pod to NodePort, to see the application running
+      ```bash
+      kubectl expose pod spring-boot-app-<check-your-pod-name> --type=NodePort --port=8080
+      ```
+      - Check the NodePort
+      ```bash
+      kubectl get svc
+      ```
+      - Access the application on `http://<minikube-ip>:<node-port>`
+      `minikube ip`
 
 
 This end-to-end Jenkins pipeline will automate the entire CI/CD process for a Java application, from code checkout to production deployment, using popular tools like SonarQube, Argo CD, and Kubernetes.
+
+Congratulations! You have successfully set up the entire CI/CD process for a Java application using Jenkins, Maven, SonarQube, SHELL scripting, Argo CD, and Kubernetes :tada::tada::tada:
