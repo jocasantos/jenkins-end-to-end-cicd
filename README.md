@@ -102,54 +102,53 @@ Steps:
       - Change the path for your docker image in spring-boot-app-manifests > deployment.yml 
 
    10. Run the Jenkins pipeline
-      - Go to Jenkins -> `Your pipeline` -> `Build Now`
-      - Dont worry if your pipeline fails, you can check the logs and fix the issues
-      - If success, you can access see your sonar report on `http://<ip-address>:9000`
+         - Go to Jenkins -> `Your pipeline` -> `Build Now`
+         - Dont worry if your pipeline fails, you can check the logs and fix the issues
+         - If success, you can access see your sonar report on `http://<ip-address>:9000`
 
    11. Check the Argo CD
-      - apply Argo CD manifest
-      ```bash
-      kubectl apply -f argocd-basic.yml
-      ```
-      - Check the NodePort for `argocd-server` 
-      ```bash
-      kubectl get svc
-      ```
-      - Access the Argo CD on `http://<ip-address>:<node-port>`
-      - Get the password
-      ```bash
-      kubectl get secret
-      kubectl edit secret example-argocd-cluster
-      ```
-      - Decode the password
-      ```bash
-      echo 'your-password' | base64 -d
-      ```
-      - Go to Argo CD UI and create a NEW APP
-      - Application Name: example
-      - Project Name: default
-      - Sync Policy: Automatic
-      - Repository URL: <your-repo-url>
-      - Path: spring-boot-app-manifests
-      - Cluster URL: https://kubernetes.default.svc
-      - Namespace: default
+         - apply Argo CD manifest
+         ```bash
+         kubectl apply -f argocd-basic.yml
+         ```
+         - Check the NodePort for `argocd-server` 
+         ```bash
+         kubectl get svc
+         ```
+         - Access the Argo CD on `http://<ip-address>:<node-port>`
+         - Get the password
+         ```bash
+         kubectl get secret
+         kubectl edit secret example-argocd-cluster
+         ```
+         - Decode the password
+         ```bash
+         echo 'your-password' | base64 -d
+         ```
+         - Go to Argo CD UI and create a NEW APP
+         - Application Name: example
+         - Project Name: default
+         - Sync Policy: Automatic
+         - Repository URL: <your-repo-url>
+         - Path: spring-boot-app-manifests
+         - Cluster URL: https://kubernetes.default.svc
+         - Namespace: default
 
    12. Check if the pods are runing on Kubernetes
-      ```bash
-      kubectl get pods
-      ```
-      - Expose pod to NodePort, to see the application running
-      ```bash
-      kubectl expose pod spring-boot-app-<check-your-pod-name> --type=NodePort --port=8080
-      ```
-      - Check the NodePort
-      ```bash
-      kubectl get svc
-      ```
-      - Access the application on `http://<minikube-ip>:<node-port>`
-      `minikube ip`
+         ```bash
+         kubectl get pods
+         ```
+         - Expose pod to NodePort, to see the application running
+         ```bash
+         kubectl expose pod spring-boot-app-<check-your-pod-name> --type=NodePort --port=8080
+         ```
+         - Check the NodePort
+         ```bash
+         kubectl get svc
+         ```
+         - Access the application on `http://<minikube-ip>:<node-port>`
+         `minikube ip`
 
+> NOTE: On a production environment, you would use webhooks to trigger the Jenkins pipeline automatically whenever a new commit is pushed to the repository.
 
-This end-to-end Jenkins pipeline will automate the entire CI/CD process for a Java application, from code checkout to production deployment, using popular tools like SonarQube, Argo CD, and Kubernetes.
-
-Congratulations! You have successfully set up the entire CI/CD process for a Java application using Jenkins, Maven, SonarQube, SHELL scripting, Argo CD, and Kubernetes :tada::tada::tada:
+### Congratulations! You have successfully set up the entire CI/CD process for a Java application using Jenkins, Maven, SonarQube, SHELL scripting, Argo CD, and Kubernetes :tada::tada::tada:
